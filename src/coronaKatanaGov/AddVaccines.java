@@ -300,6 +300,7 @@ class AddVacPanel extends JPanel
 					}
 					
 				}
+				
 				totalvac=cnt*Integer.parseInt(tf_qty.getText());
 				if(gt.getTotalVaccine()>=(totalvac)) {
 				for(int i=0;i<tbl_centers.getRowCount();i++) {
