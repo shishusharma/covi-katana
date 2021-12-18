@@ -45,7 +45,12 @@ public class SlotBook extends JFrame implements TableCellRenderer {
 //    	
  	public static void main(String[] args) {
 			// TODO Auto-generated method stub
+ 		String adhar="99648070185";
+ 			//new sessionA(adhar);
+ 			ButtonRenderer.adhar=adhar;
 			new SlotBook(null);
+			
+			
 
 		}
 
@@ -252,9 +257,11 @@ public class SlotBook extends JFrame implements TableCellRenderer {
 				String s=""+rs.getString(1)+" "+rs.getString("center_Name")+" "+rs.getString("center_state")+" "+rs.getString("center_dist")+" "+rs.getInt("center_pincode");
 				
 				//System.out.println("date1 -->"+date1);
+				
 				while(rs1.next()) {
+					
 					while(!rs1.getString(2).equals(date[i-1])) {
-						obj[i++]="";
+						obj[i++]="NA";
 					}
 					
 						obj[i++]=rs1.getString(3);
@@ -266,7 +273,7 @@ public class SlotBook extends JFrame implements TableCellRenderer {
 				}
 				if(obj[1]!=null)
 					tm.addRow(obj);
-					System.out.println(obj[1]+"  "+obj[2]);
+					//System.out.println(obj[1]+"  "+obj[2]);
 //				
 
 			}	

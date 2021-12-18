@@ -13,15 +13,15 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 
 
-public class Loggedin extends JPanel {
+public class Loggedin extends JFrame {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	public Loggedin() {}
-//	public static void main(String[] args) {
-//		new Loggedin("shishu","996480701485","7519308095","shishus808@gmail.com",0);
-//	}
+	public static void main(String[] args) {
+		new Loggedin("shishu","996480701485","7519308095","shishus808@gmail.com",0);
+	}
 	SlotBook SB;
 	public Loggedin(String name, String aadhar, String phone, String email, int status) {
 			setVisible(true);

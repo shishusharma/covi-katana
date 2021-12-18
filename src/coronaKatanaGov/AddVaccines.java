@@ -291,12 +291,22 @@ class AddVacPanel extends JPanel
         btn_add.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent arg0) {
 				System.out.println("add vaccinde");
-				int k=0;
+				int k=0,cnt=0,totalvac=0;
+				
+				for(int i=0;i<tbl_centers.getRowCount();i++) {
+					Boolean chked=Boolean.valueOf(tbl_centers.getValueAt(i, 0).toString());						
+					if ((chked)) {
+						cnt++;
+					}
+					
+				}
+				totalvac=cnt*Integer.parseInt(tf_qty.getText());
+				if(gt.getTotalVaccine()>=(totalvac)) {
 				for(int i=0;i<tbl_centers.getRowCount();i++) {
 					Boolean chked=Boolean.valueOf(tbl_centers.getValueAt(i, 0).toString());
 					int id = Integer.parseInt(tbl_centers.getValueAt(i, 4).toString());
-					
-					if ((chked)&&(gt.getTotalVaccine()>=Integer.parseInt(tf_qty.getText()))) {
+						
+					if ((chked)/*&&(gt.getTotalVaccine()>=Integer.parseInt(tf_qty.getText()))*/) {
 						Connection con=MyConnection.getConn();
 						PreparedStatement ps;
 						try {
@@ -311,17 +321,24 @@ class AddVacPanel extends JPanel
 							e.printStackTrace();
 							
 						}
-					}else {
-						JOptionPane.showConfirmDialog(null, "Please Checked OR Vaccine is not Availave \n Quntity must be <='"+gt.getTotalVaccine()+"'");
 					}
 					
 				}
 				if(k==1) {
 					JOptionPane.showConfirmDialog(null, "Successfully Saved");
+					gt.getTotalVaccine();
+					
 				}
-				
+				else {
+					JOptionPane.showConfirmDialog(null, "Something went Worng please Try Later");
+				}
+			}else {
+				JOptionPane.showConfirmDialog(null, "Please Checked OR Vaccine is not Availave \n Quntity must be <='"+gt.getTotalVaccine()+"'");
+			}
+								
 			}
         });
+    
         
        ///search button
         btn_search.addActionListener(new ActionListener() {

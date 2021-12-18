@@ -85,6 +85,7 @@ public class FrontView extends JFrame
 		
 		
 		JButton btnhome = new JButton("Home");
+		
 		JButton btnData = new JButton("State Wise Data");
 		JButton vaccination = new JButton("Vaccination");
 		JButton btnLogin = new JButton("Login/SignUp");
@@ -102,7 +103,9 @@ public class FrontView extends JFrame
 			title.setForeground(Color.white);
 			title.setFont(new Font("Serif", Font.BOLD, 20));
 
+			btnhome.setBounds(0,150,w,50);
 			btnhome.setForeground(fnt);
+			add(btnhome);
 			btnhome.setFont(new Font("Californian FB", Font.BOLD, 18));
 			btnhome.setBorderPainted(false);
 			btnhome.setBackground(clr);

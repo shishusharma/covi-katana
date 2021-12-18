@@ -14,7 +14,15 @@ import javax.swing.table.TableCellRenderer;
 //Button Renderer Class
 @SuppressWarnings("serial")
 public class ButtonRenderer extends JButton implements TableCellRenderer{
-	
+	static String adhar;
+	public static String getAdhar() {
+		return adhar;
+	}
+
+	public static void setAdhar(String aadhar) {
+		adhar = aadhar;
+	}
+
 	//Constructor
 	public ButtonRenderer() {
 		//set Button properties
@@ -25,7 +33,7 @@ public class ButtonRenderer extends JButton implements TableCellRenderer{
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
 			int row, int column) {
 		// TODO Auto-generated method stub
-		setText((value==null)?"":value.toString());
+		setText((value==null)?"NA":value.toString());
 		return this;
 	}
 	
@@ -68,9 +76,12 @@ class ButtonEditor extends DefaultCellEditor{
 	@Override
 	public Object getCellEditorValue() {
 		// TODO Auto-generated method stub
-		if(clicked) {
+		if(clicked&&!lbl.equals("NA")) {
 			//show us some message
-			JOptionPane.showConfirmDialog(btn, lbl+"clicked");			
+			JOptionPane.showConfirmDialog(btn, lbl+"clicked"+ButtonRenderer.getAdhar());	
+			//code allote vaccine to the patient 
+			
+			
 		}
 		//set it to false now that its clicked
 		clicked=false;
