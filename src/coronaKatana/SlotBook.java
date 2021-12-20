@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Calendar;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -26,7 +27,16 @@ import javax.swing.table.TableCellRenderer;
 import com.Myconnection.MyConnection;
 
 import api.fun.ApiFun;
-
+class Cenvacdetails{
+	String centerId;
+	String vac_Count;
+	String date;
+	public Cenvacdetails(String centerID,String vac_Count,String date) {
+		this.centerId=centerID;
+		this.vac_Count=centerID;
+		this.date=date;
+	}
+}
 
 
 public class SlotBook extends JFrame implements TableCellRenderer {
@@ -97,9 +107,9 @@ public class SlotBook extends JFrame implements TableCellRenderer {
             case 2:
                 return String.class;
             case 3:
-                return Integer.class;
+                return String.class;
             case 4:
-            	return Integer.class;
+            	return String.class;
             default:
                 return String.class;
         }
@@ -123,7 +133,7 @@ public class SlotBook extends JFrame implements TableCellRenderer {
         cmb_dist.setBounds(850,235,150,25);
         add(cmb_dist);
 
-        
+        //adding table to table renederer class
         for(int i=1;i<=5;i++) {
         	   // tbl_centers.setRowSorter(sorter);
     		tbl_centers.getColumnModel().getColumn(i).setCellRenderer(new ButtonRenderer());
@@ -226,7 +236,7 @@ public class SlotBook extends JFrame implements TableCellRenderer {
          showTable();
     }
     
-  
+
     
  public void showTable() {
  	
@@ -253,6 +263,7 @@ public class SlotBook extends JFrame implements TableCellRenderer {
 				
 				ResultSet rs1=stmt1.executeQuery();
 				String []obj=new String[6];
+				//Cenvacdetails []obj=new Cenvacdetails[6];
 				int i=1;
 				String s=""+rs.getString(1)+" "+rs.getString("center_Name")+" "+rs.getString("center_state")+" "+rs.getString("center_dist")+" "+rs.getInt("center_pincode");
 				
@@ -262,10 +273,14 @@ public class SlotBook extends JFrame implements TableCellRenderer {
 					
 					while(!rs1.getString(2).equals(date[i-1])) {
 						obj[i++]="NA";
+//						obj[i++].vac_Count="NA";
+//						obj[i++].centerId=rs.getString(1);
+						
 					}
 					
-						obj[i++]=rs1.getString(3);
-						
+					obj[i++]=rs1.getString(3);
+//						obj[i++].vac_Count=rs1.getString(3);
+//						obj[i++].centerId=rs.getString(1);
 					obj[0]= s;
 									
 

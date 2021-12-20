@@ -10,13 +10,17 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+
 import java.awt.Color;
 import java.awt.Font;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import WonHeaderRenderer.WonHeaderRenderer;
 
 
 //class coronaStatus extends JFrame{
@@ -157,13 +161,31 @@ public class StateWiseUpdate extends JPanel {
 		
 		 		
 				setLayout(null);
-				setVisible(true);
+				setVisible(false);
 				//setSize(w,h);
 				setBounds(200,0,1450,720);
 				setBackground(Color.red);
 				jt1=new JTable(tm);
+				jt1.getTableHeader().setDefaultRenderer(new DrawnHeaderRenderer());
+				jt1.getColumnModel().getColumn(1).setHeaderRenderer(new WonHeaderRenderer());
+				jt1.getColumnModel().getColumn(2).setHeaderRenderer(new LostHeaderRenderer());
+				jt1.getColumnModel().getColumn(3).setHeaderRenderer(new CyanHeaderRenderer());
+				JTableHeader header = jt1.getTableHeader();
+				header.setDefaultRenderer(new KeepSortIconHeaderRenderer(header.getDefaultRenderer()));
+//				for(int i=1;i<=3;i++) {
+//		        	   // tbl_centers.setRowSorter(sorter);
+//		    		jt1.getColumnModel().getColumn(i).setCellRenderer(new ButtonRenderer());
+//		    		
+//		    		//set custom editor to teams coulumn
+//		    		jt1.getColumnModel().getColumn(i).setCellEditor(new ButtonEditor(new JTextField()));
+//		    			
+//		        }
+			
+//			      table.getColumnModel().getColumn(0).setCellRenderer(cellRenderer);
 				add(jsp=new JScrollPane(jt1));
 				jsp.setBounds(550,300,600,350);
+				
+				//jsp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
 				//jsp.setSize(w,h);
 				
 				HttpClient client=HttpClient.newHttpClient();

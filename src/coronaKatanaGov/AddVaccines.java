@@ -10,6 +10,8 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -106,7 +108,7 @@ class AddVacPanel extends JPanel
         add(new allotVaccine());
 
         lbl_header=new JLabel("ALOT VACCINES TO THE CENTER",JLabel.CENTER);
-        lbl_header.setBounds(0,0,1450,100);
+        lbl_header.setBounds(0,0,1250,100);
         lbl_header.setFont(new Font("Serif", Font.BOLD, 20));
         lbl_header.setForeground(new Color(247,249,249));
         lbl_header.setBackground(new Color(46, 134, 193));
@@ -263,25 +265,54 @@ class AddVacPanel extends JPanel
         tf_date=new JTextField();
         tf_date.setBounds(680,585,100,25);
         add(tf_date);
-        
-        JButton btn_date=new JButton("a");
-        btn_date.setFont(new Font("Georgia", Font.BOLD, 18));
-        btn_date.setBounds(781,580,30,30);
-        btn_date.setBackground(new Color(93,103,226));
-        btn_date.setOpaque(true);
-        add(btn_date);
-        
-        
-        btn_date.addActionListener(new ActionListener() {
-
+        tf_date.addMouseListener(new MouseListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				final JFrame f = new JFrame();
-				tf_date.setText(new DatePicker(f).setPickedDate());
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
 				
 			}
-        	
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				final JFrame f = new JFrame();
+				tf_date.setText(new DatePicker(f).setPickedDate());
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+				
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}  
         });
+        
+//        JButton btn_date=new JButton("a");
+//        btn_date.setFont(new Font("Georgia", Font.BOLD, 18));
+//        btn_date.setBounds(781,580,30,30);
+//        btn_date.setBackground(new Color(93,103,226));
+//        btn_date.setOpaque(true);
+//        add(btn_date);
+//        
+//        
+//        btn_date.addActionListener(new ActionListener() {
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				final JFrame f = new JFrame();
+//				tf_date.setText(new DatePicker(f).setPickedDate());
+//				
+//			}
+//        	
+//        });
 
         btn_add=new JButton("ADD");
         btn_add.setFont(new Font("Georgia", Font.BOLD, 18));

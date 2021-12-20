@@ -9,16 +9,16 @@ import javax.swing.*;
 import java.awt.Color;
 import java.awt.Font;
 
-public class home extends JFrame{
-    public static void main(String[] args) {
-        new home();
-    }
+public class home extends JPanel{
+//    public static void main(String[] args) {
+//        new home();
+//    }
     public home()
     {
         setLayout(null);
         setVisible(true);
         //setSize(w,h);
-        setBounds(200,0,1450,720);
+        setBounds(200,0,1250,720);
         setBackground(new Color(236, 240, 241));
 
         JButton btn_totalInf;

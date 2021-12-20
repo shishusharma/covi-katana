@@ -26,6 +26,7 @@ public class FrontView extends JFrame
 	static Login Llogin=new Login(1);
 	//static LoginPanel LPanel=new LoginPanel();
 	static Registration RRR=new Registration();
+	static home hm=new home();
 	//static Loggedin Loggin=new Loggedin(null,null,null,null,0);
 	//=new Loggedin(null,null,null,null,0);
 	

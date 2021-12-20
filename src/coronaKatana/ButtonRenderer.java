@@ -9,12 +9,22 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableCellRenderer;
 
 //Button Renderer Class
 @SuppressWarnings("serial")
 public class ButtonRenderer extends JButton implements TableCellRenderer{
 	static String adhar;
+	static long center_id;
+	public static long getCenter_id() {
+		return center_id;
+	}
+
+	public static void setCenter_id(long center_id) {
+		ButtonRenderer.center_id = center_id;
+	}
+
 	public static String getAdhar() {
 		return adhar;
 	}
@@ -56,6 +66,7 @@ class ButtonEditor extends DefaultCellEditor{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				
 				fireEditingStopped();
 			}
 			
@@ -67,7 +78,7 @@ class ButtonEditor extends DefaultCellEditor{
 	public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
 		// TODO Auto-generated method stub
 		//set text to button ,set clicked to true, then return the bin object
-		lbl=(value==null)?"":value.toString();
+		lbl=(value==null)?"NA":value.toString();
 		btn.setText(lbl);
 		clicked=true;
 		return btn;
@@ -78,6 +89,7 @@ class ButtonEditor extends DefaultCellEditor{
 		// TODO Auto-generated method stub
 		if(clicked&&!lbl.equals("NA")) {
 			//show us some message
+			
 			JOptionPane.showConfirmDialog(btn, lbl+"clicked"+ButtonRenderer.getAdhar());	
 			//code allote vaccine to the patient 
 			
@@ -87,7 +99,7 @@ class ButtonEditor extends DefaultCellEditor{
 		clicked=false;
 		return new String(lbl);		
 	}
-	
+
 	@Override
 	public boolean stopCellEditing() {
 		// TODO Auto-generated method stub
