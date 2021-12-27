@@ -11,8 +11,7 @@ import java.util.TreeMap;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-//used in slotbook class
-//ApiFun eligible for state and district details
+
 
 public class ApiFun {
 	
@@ -69,8 +68,8 @@ public class ApiFun {
 	    
 //	    JSONArray arr=states.getJSONArray("states");
 	    JSONArray arr=states.getJSONArray("districts");
-  
-	   
+
+		sortedDataDist.clear();
 	    for(int i=0;i<arr.length();i++)
 	    {
 	        JSONObject cdata=arr.getJSONObject(i);

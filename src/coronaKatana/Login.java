@@ -1,16 +1,15 @@
 package coronaKatana;
 
-import javax.swing.JPanel;
-import javax.swing.JLabel;
+import javax.swing.*;
 
 import java.awt.Font;
 import java.awt.Color;
-import javax.swing.JTextField;
 
 import com.Myconnection.MyConnection;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
+import api.fun.Mail;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -19,8 +18,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.border.CompoundBorder;
 
 import java.awt.event.ActionListener;
 import java.security.spec.MGF1ParameterSpec;
@@ -51,418 +49,249 @@ public class Login extends JPanel {
 	
 	
 //start Login(int i)	
-	public Login(int i) {
-		
-		setBounds(800,300,300,200);
+	public Login() {
+		int y=150;
+		setBounds(830,50,626,670);
 		setVisible(false);
 		setLayout(null);
-		setBackground(Color.cyan);
+		//setBorder(BorderFactory.createLineBorder(new Color(51,54,69),40));
+		setBorder(new CompoundBorder(
+				BorderFactory.createMatteBorder(170, 80, 50, 80, new Color(0, 128, 255)),
+				BorderFactory.createMatteBorder(5, 5, 5, 5, Color.black)));
+		setBackground(new Color(220, 208, 255));
 		
-		JLabel lblHeading=new JLabel("Login Here");
-		lblHeading.setBackground(Color.red);
-		lblHeading.setBounds(410,0,90,25);
+		JLabel lblHeading=new JLabel("USER LOGIN",JLabel.CENTER);
+		lblHeading.setBounds(80,70,466,100);
+		lblHeading.setFont(new Font("Serif", Font.BOLD, 22));
+		lblHeading.setForeground(Color.white);
+		lblHeading.setBackground(Color.black);
+		lblHeading.setOpaque(true);
 		add(lblHeading);
 
-		JLabel lblph=new JLabel("Enter Mobile");
-		lblph.setBackground(Color.red);
-		lblph.setBounds(10,40,90,25);
+		JLabel lblph=new JLabel("Contact No.       :");
+		lblph.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblph.setBounds(121,100+y,150,28);
 		add(lblph);
 	
-		JLabel lblEmail=new JLabel("Enter Email");
-		lblEmail.setBackground(Color.red);
-		lblEmail.setBounds(10,70,90,25);
+		JLabel lblEmail=new JLabel("Email              :");
+		lblEmail.setFont(new Font("Verdana", Font.BOLD, 16));
+		lblEmail.setBounds(121,160+y,150,28);
 		add(lblEmail);
 		
-		JLabel lblOtp=new JLabel("Enter OTP");
-		lblOtp.setBackground(Color.red);
-		lblOtp.setBounds(10,135,70,25);
+		JLabel lblOtp=new JLabel("Enter OTP       :");
+		lblOtp.setFont(new Font("Verdana", Font.BOLD, 16));
+		lblOtp.setBounds(121,280+y,150,28);
 		add(lblOtp);
 		
 		txtNumber=new JTextField();
-		txtNumber.setBounds(110,40,150,20);
+		txtNumber.setBounds(300,105+y,195,25);
+		txtNumber.setFont(new Font("Verdana", Font.PLAIN, 14));
+		txtNumber.setBorder(BorderFactory.createLineBorder(new Color(100, 149, 237),1));
 		add(txtNumber);
 		
 		txtEmail=new JTextField();
-		txtEmail.setBounds(110,70,150,20);
+		txtEmail.setBounds(300,165+y,195,25);
+		txtEmail.setFont(new Font("Verdana", Font.PLAIN, 14));
+		txtEmail.setBorder(BorderFactory.createLineBorder(new Color(100, 149, 237),1));
 		add(txtEmail);
 		
 		txtOtp=new JTextField();
-		txtOtp.setBounds(100,135,60,20);
+		txtOtp.setBounds(300,285+y,195,23);
+		txtOtp.setFont(new Font("Verdana", Font.PLAIN, 14));
+		txtOtp.setBorder(BorderFactory.createLineBorder(new Color(100, 149, 237),1));
 		add(txtOtp);
 		
 		JLabel lbl_otp=new JLabel("");
 		add(lbl_otp);
-		lbl_otp.setBounds(10,100,130,20);
+		lbl_otp.setBounds(230,200+y,130,20);
+		lblOtpSend=new JLabel("");
+		add(lblOtpSend);
 		
 		
-		
-		JButton btnotp=new JButton("GET OTP");
-		btnotp.setBounds(160,100,130,20);
+		JButton btnotp=new JButton("Get OTP");
 		add(btnotp);
-		
-		
-		btnotp.addActionListener(new ActionListener() {
-			
+		btnotp.setBounds(230,220+y,150,30);
+		btnotp.setFont(new Font("Verdana", Font.BOLD, 15));
+		btnotp.setForeground(Color.white);
+		btnotp.setBackground(Color.black);
+		btnotp.setOpaque(true);
+		btnotp.addMouseListener(new java.awt.event.MouseAdapter() {
+			public void mouseEntered(java.awt.event.MouseEvent evt) {
+				btnotp.setBackground(Color.darkGray);
+			}
+
+			public void mouseExited(java.awt.event.MouseEvent evt) {
+				btnotp.setBackground(Color.black);
+			}
+		});
+		btnotp.setFocusPainted(false);
+		lbl_otp.setForeground(Color.red);
+		btnotp.addActionListener(new ActionListener() {			
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("1234");
-				long mob=Long.parseLong(txtNumber.getText().trim());
+				System.out.println("-->1234");
+				String mob=txtNumber.getText().trim();
 				String Email=txtEmail.getText().trim();
 				Connection con=(Connection) MyConnection.getConn();
-				
-				try {
-					PreparedStatement stmt=(PreparedStatement) con.prepareStatement("select * from flogin where phone='"+mob+"' and email='"+Email+"'");
-					stmt.executeQuery();
-					
-				}catch(Exception e) {
-					lbl_otp.setText("Please Enter Correct Deratils");
-					System.out.println(e);
-				}
-				
-				
-				//Random rnd=new Random();
-				//OTP=rnd.nextInt(99999);
-				System.out.println( "Creating message" );
-		        String from="otpshishusharma@gmail.com";
-		        String to=txtEmail.getText();
-		        String sub="Testing javax.mail kancha.";
-		        String msg="This is System Generated Mail for COVID Vaccination and OTP is "+OTP+"";
-		        lbl_otp.setText("OTP send to Eamil");
-		        sendMail(msg,sub,to,from);
-		       
-				
-			}
-	
-			private void sendMail(String msg, String sub, String to, String from) {
-				String host="smtp.gmail.com";
-				Properties prop=System.getProperties();
-				prop.put("mail.smtp.host", host);
-				prop.put("mail.smtp.port", "465");
-				prop.put("mail.smtp.ssl.enable", "true");
-				prop.put("mail.smtp.auth", "true");
-				
-				Session session = Session.getDefaultInstance(prop,    
-				           new javax.mail.Authenticator() {    
-				           protected PasswordAuthentication getPasswordAuthentication() {    
-				           return new PasswordAuthentication("otpshishusharma@gmail.com","@Otp1989");  
-				           }    
-				          });
-				
-				//session.setDebug(true);
-				MimeMessage m= new MimeMessage(session);
-				try {
-					
-					m.setFrom(from);
-					m.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-					m.setSubject(sub);
-					m.setText(msg);
-					Transport.send(m);
-				} catch (MessagingException e) {
-					// TODO Auto-generated catch block
-					lbl_otp.setText("Please Enter Valid Email");
-					e.printStackTrace();
-				}
-
-			
-			}
-			
-		});
-		
-		
-		
-		JButton btnVali=new JButton("Validate");
-		btnVali.setBounds(175,135,80,20);
-		add(btnVali);
-		
-		btnVali.addActionListener(new ActionListener() {
-			
-			
-			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("archit");
-				setVisible(false);
-				
-				
-				String aadhar = "";
-				String nm = null;
-				int status=0;
-				if(Integer.parseInt(txtOtp.getText())==OTP){
-					//JOptionPane.showMessageDialog(null, "yes U are login successfully");
-					lbl_otp.setBounds(10,175,150,20);
-					lbl_otp.setForeground(Color.green);
-					lbl_otp.setText("OTP Validate Successfully");
-					
-					long mob=Long.parseLong(txtNumber.getText().trim());
-					String Email=txtEmail.getText().trim();
-					Connection con=(Connection) MyConnection.getConn();
-					
+				int k=-1;
+				if((mob.length()==10)&&(Email.length()>8)) {
 					try {
-						PreparedStatement stmt=(PreparedStatement) con.prepareStatement("select * from flogin where phone='"+mob+"' or email='"+Email+"'");
 						
-						ResultSet rs=stmt.executeQuery();
-						if(rs.next()) {
-							aadhar=rs.getString("aadhaar");
-							nm=rs.getString("name");
-							
-						}
-						PreparedStatement stmt1=(PreparedStatement) con.prepareStatement("select status from aadhaar_status where aadhar='"+aadhar+"'");
-						
-						rs=stmt1.executeQuery();
-						if(rs.next()) {
-							status=rs.getInt("status");
-						}
-						
-						System.out.println("mob- "+mob+"email- "+Email+" Addahr- "+aadhar);
-						//new FrontView(new Loggedin(nm,aadhar,String.valueOf(mob),Email,status));
-						//FrontView.Loggin=new Loggedin(nm,aadhar,String.valueOf(mob),Email,status);
-						//FrontView.Loggin=null;
-						//FrontView.Loggin.add(new Loggedin());
-						LoginPanel.LloginReg.setVisible(false);
-						LoginPanel.Llogin.setVisible(false);
-						FrontView.SWU.setVisible(false);
-						//FrontView.LPanel.setVisible(false);
-						FrontView.RRR.setVisible(false);
-						FrontView.Llogin.setVisible(false);
-						
-						
-						System.out.println(nm+" "+aadhar+" "+mob+" "+Email+" "+status);
-//						FrontView.Logginn.setName(nm);
-//						FrontView.Logginn.setAadhar(aadhar);
-//						FrontView.Logginn.setPhone(String.valueOf(mob));
-//						FrontView.Logginn.setEmail(Email);
-//						FrontView.Logginn.setStatus(status);
-//						FrontView.Loggin.add(new Loggedin(nm,aadhar,String.valueOf(mob),Email,status));
-//						FrontView.Loggin.setVisible(true);
-						//FrontView.Logginn.add(new Loggedin());
-					//	FrontView.Loggin.setVisible(false);
-					//	FrontView.Logginn.setVisible(true);
-						System.out.println("xyzzzzzzz");
-//						FrontView.Loggin=new Loggedin(nm,aadhar,String.valueOf(mob),Email,status);
-//						FrontView.Loggin.setVisible(true);
-						Loggedin LLoggin=new Loggedin(nm,aadhar,String.valueOf(mob),Email,status);
-						LLoggin.setVisible(true);
-						FrontView.f1.add(LLoggin);
-						
-//						add(LLoggin);
-						
-//						FrontView.f1.add(LLoggin);
-//						LLoggin.setVisible(true);
-						LLoggin.setVisible(true);
-						
-						
-						
+						PreparedStatement stmt=(PreparedStatement) con.prepareStatement("select * from flogin where phone='"+mob+"' and email='"+Email+"'");
+						stmt.executeQuery();
+						lbl_otp.setText("");
+						k=0;
 					}catch(Exception e) {
-						e.printStackTrace();
+						k=1;
+						lbl_otp.setBounds(230,200+y,130,20);
+						lbl_otp.setText("Please Enter Correct Deratils");
 						System.out.println(e);
 					}
-										
-				}else{
-					//JOptionPane.showMessageDialog(null, "wrong OTP");
-					lbl_otp.setBounds(10,175,150,20);
-					lbl_otp.setForeground(Color.red);
-					lbl_otp.setText("UnValid OTP, ReEntered");
+					
+				}else {
+					k=1;
+					lbl_otp.setBounds(230,200+y,130,20);
+					lbl_otp.setText("Please Enter All Fields");
+					
 				}
-				//FrontView.Loggin.setVisible(true);
+				
+				
+				if(k==0) {
+					//Random rnd=new Random();
+					//OTP=rnd.nextInt(99999);
+					System.out.println( "Creating message" );
+			        //String from="otpshishusharma@gmail.com";
+			        String to=txtEmail.getText();
+			        String sub="Testing javax.mail kancha.";
+			        String msg="This is System Generated Mail for COVID Vaccination and OTP is "+OTP+"";
+			        lblOtpSend.setBounds(300, 200+y, 195, 20);
+			        int check=Mail.sendMail(msg,sub,to);
+			        if(check==0) {
+						
+						lblOtpSend.setText("Please Enter Valid Email");
+					}else {
+						lblOtpSend.setText("OTP send to Eamil");
+					}
+			        
+				}
 			}
+	
 			
-		
 		});
 		
-		//FrontView.Loggin.setVisible(true);
+		
+		
+		JButton btnVali=new JButton("Login");
+		btnVali.setBounds(230,340+y,150,30);
+		add(btnVali);
+		btnVali.setFont(new Font("Verdana", Font.BOLD, 15));
+		btnVali.setForeground(Color.white);
+		btnVali.setBackground(Color.black);
+		btnVali.setOpaque(true);
+		btnVali.addMouseListener(new java.awt.event.MouseAdapter() {
+			public void mouseEntered(java.awt.event.MouseEvent evt) {
+				btnVali.setBackground(Color.darkGray);
+			}
+
+			public void mouseExited(java.awt.event.MouseEvent evt) {
+				btnVali.setBackground(Color.black);
+			}
+		});
+		btnVali.setFocusPainted(false);
+		
+		btnVali.addActionListener(new ActionListener() {
+
+
+			  public void actionPerformed(ActionEvent arg0) {
+					  
+					  
+					  String aadhar = "";
+					  String nm = null;
+					  int status=0;
+					  if(Integer.parseInt(txtOtp.getText())==OTP){
+						  //JOptionPane.showMessageDialog(null, "yes U are login successfully");
+						  //lbl_otp.setBounds(10,175,150,20);
+						  //lbl_otp.setForeground(Color.green);
+						  //lbl_otp.setText("OTP Validate Successfully");
+
+						  String mob=txtNumber.getText().trim();
+						  String Email=txtEmail.getText().trim();
+						  Connection con=(Connection) MyConnection.getConn();
+
+						  try {
+							  ResultSet rs=con.prepareStatement("SELECT flogin.name as name,flogin.aadhaar as aadhaar ,"
+									  + "aadhaar_status.status as stat FROM aadhaar_status INNER "
+									  + "JOIN flogin WHERE flogin.phone='"+mob+"' and flogin.email='"+Email+"' "
+									  + "and flogin.aadhaar=aadhaar_status.aadhar").executeQuery();
+
+
+							  if(rs.next()) {
+								  aadhar=rs.getString("aadhaar");
+								  nm=rs.getString("name");
+								  status=rs.getInt("stat");
+
+
+							  }
+
+							  System.out.println("mob- "+mob+"email- "+Email+" Addahr- "+aadhar);
+							  FrontView.SWU.setVisible(false);
+							  FrontView.RRR.setVisible(true);
+							  FrontView.Llogin.setVisible(true);
+							  FrontView.hm.setVisible(false);
+							  FrontView.SB.setVisible(false);
+							  FrontView.AL.setVisible(false);
+							  FrontView.CL.setVisible(false);
+							  FrontView.cnt.setVisible(false);
+							  Loggedin.setUsername(nm);
+							  Loggedin.setAadhaar(aadhar);
+							  Loggedin.setMob(""+mob);
+							  Loggedin.setEmail(Email);
+							  Loggedin.setStatus(status);
+
+
+							  System.out.println(nm+" "+aadhar+" "+mob+" "+Email+" "+status);
+//													  Loggedin LLL=new Loggedin();
+//													  FrontView.f1.add(LLL);
+//													  LLL.setVisible(true);
+							  	JOptionPane jop = new JOptionPane();
+						        JDialog dialog = jop.createDialog("User : "+nm+"");
+						        dialog.setSize(1250, 730);
+						        dialog.setLocationRelativeTo(null);
+						        dialog.setContentPane(new Loggedin());
+						        dialog.setVisible(true);
+						        clearField();
+
+						  }catch(Exception e) {
+							  e.printStackTrace();
+							  System.out.println(e);
+						  }
+
+					  }else{
+							  //JOptionPane.showMessageDialog(null, "wrong OTP");
+						  FrontView.SB.setVisible(false);
+						  lbl_otp.setBounds(230,310+y,150,20);
+						  lbl_otp.setForeground(Color.red);
+						  lbl_otp.setText("UnValid OTP, ReEntered");
+					  }
+					  //FrontView.Loggin.setVisible(true);
+				  }
+
+
+		 });
+			
+
+									  //FrontView.Loggin.setVisible(true);
 		
 		
 	}
 
 //Ent Login(int i)
-	
-	
-	public Login() {
-		setBounds(200,0,1250,720);
-		setVisible(false);
-		 setLayout(null);
-		 //setBackground(Color.red);
-		 int y=150;
-		 JLabel lbl_header;
-		 
-		 lbl_header=new JLabel("NEW REGISTRATION",JLabel.CENTER);
-	        lbl_header.setBounds(0,0,1250,100);
-	        lbl_header.setFont(new Font("Serif", Font.BOLD, 20));
-	        lbl_header.setForeground(new Color(247,249,249));
-	        lbl_header.setBackground(new Color(46, 134, 193));
-	        lbl_header.setOpaque(true);
-	        add(lbl_header);
-
-		
-		//label
-		JLabel lblName = new JLabel("Name");
-		lblName.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblName.setBounds(41, 41+y, 58, 28);
-		 add(lblName);
-		
-		JLabel lblNumber = new JLabel("Number");
-		lblNumber.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNumber.setBounds(41, 98+y, 79, 28);
-		 add(lblNumber);
-		
-		JLabel lblEmail = new JLabel("Email");
-		lblEmail.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblEmail.setBounds(41, 155+y, 79, 28);
-		 add(lblEmail);
-		
-		JLabel lblAadhar = new JLabel("Aadhaar No.");
-		lblAadhar.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblAadhar.setBounds(41, 212+y, 95, 28);
-		 add(lblAadhar);
-		
-		lblOtpSend=new JLabel("");
-		lblOtpSend.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblOtpSend.setForeground(Color.red);		
-		lblOtpSend.setBounds(275, 250+y, 195, 20);
-		 add(lblOtpSend);
-		
-		//textField
-		txtName = new JTextField();
-		txtName.setBounds(206, 46+y, 195, 23);
-		 add(txtName);
-		txtName.setColumns(10);
-		
-		txtNumber = new JTextField();
-		txtNumber.setBounds(206, 104+y, 195, 20);
-		 add(txtNumber);
-		txtNumber.setColumns(10);
-		
-		txtEmail = new JTextField();
-		txtEmail.setBounds(206, 162+y, 195, 20);
-		 add(txtEmail);
-		txtNumber.setColumns(10);
-		
-		txtAadhaar = new JTextField();
-		txtAadhaar.setBounds(206, 220+y, 195, 20);
-		add(txtAadhaar);
-		txtNumber.setColumns(10);
-		
-		
-		
-		JButton btnLogin = new JButton("Register");
-		btnLogin.addActionListener(new ActionListener() {
-			
-			public void actionPerformed(ActionEvent arg0) {
-				Random rnd=new Random();
-				OTP=rnd.nextInt(99999);
-				System.out.println( "Creating message" );
-		        String from="otpshishusharma@gmail.com";
-		        String to=txtEmail.getText();
-		        String sub="Testing javax.mail kancha.";
-		        String msg="This is System Generated Mail for COVID Vaccination and OTP is "+OTP+"";
-		        lblOtpSend.setText("OTP send to Eamil");
-		        sendMail(msg,sub,to,from);
-		        try {
-					insertValueTofLogin(txtName.getText(),Long.parseLong(txtNumber.getText()),Long.parseLong(txtAadhaar.getText()),txtEmail.getText());
-				} catch (NumberFormatException | ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-			}
-	
-			private void sendMail(String msg, String sub, String to, String from) {
-				String host="smtp.gmail.com";
-				Properties prop=System.getProperties();
-				prop.put("mail.smtp.host", host);
-				prop.put("mail.smtp.port", "465");
-				prop.put("mail.smtp.ssl.enable", "true");
-				prop.put("mail.smtp.auth", "true");
-				
-				Session session = Session.getDefaultInstance(prop,    
-				           new javax.mail.Authenticator() {    
-				           protected PasswordAuthentication getPasswordAuthentication() {    
-				           return new PasswordAuthentication("otpshishusharma@gmail.com","@Otp1989");  
-				           }    
-				          });
-				
-				//session.setDebug(true);
-				MimeMessage m= new MimeMessage(session);
-				try {
-					
-					m.setFrom(from);
-					m.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-					m.setSubject(sub);
-					m.setText(msg);
-					Transport.send(m);
-				} catch (MessagingException e) {
-					// TODO Auto-generated catch block
-					lblOtpSend.setBounds(240, 250+y, 195, 20);
-					lblOtpSend.setText("Please Enter Valid Email");
-					e.printStackTrace();
-				}
-
-			
-			}	
-			
-			
-		});
-		btnLogin.setBounds(312, 278+y, 89, 23);
-		 add(btnLogin);
-		
-		JLabel lblOtp = new JLabel("OTP");
-		lblOtp.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblOtp.setBounds(40, 314+y, 58, 20);
-		 add(lblOtp);
-		
-		txtOtp = new JTextField();
-		txtOtp.setBounds(206,316+y, 195, 23);
-		 add(txtOtp);
-		txtOtp.setColumns(10);
-		
-		JButton btnValidateOtp = new JButton("Validate OTP");
-		btnValidateOtp.addActionListener(new ActionListener() {
-			
-			public void actionPerformed(ActionEvent arg0) {
-				if(Integer.parseInt(txtOtp.getText())==OTP){
-					//JOptionPane.showMessageDialog(null, "yes U are login successfully");
-					lblOtpSend.setBounds(230, 340+y, 195, 20);
-					lblOtpSend.setForeground(Color.green);
-					lblOtpSend.setText("OTP Validate Successfully");
-//					try {
-//						insertValueTofLogin(txtName.getText(),Integer.parseInt(txtNumber.getText()),Integer.parseInt(txtAadhaar.getText()),txtEmail.getText());
-//					} catch (NumberFormatException | ClassNotFoundException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-					
-				}else{
-					//JOptionPane.showMessageDialog(null, "wrong OTP");
-					lblOtpSend.setBounds(230, 340+y, 195, 20);
-					lblOtpSend.setForeground(Color.red);
-					lblOtpSend.setText("UnValid OTP, ReEntered");
-				}
-			}
-		});
-		btnValidateOtp.setBounds(284, 370+y, 114, 23);
-		 add(btnValidateOtp);
-		
-		
+	public void clearField() {
+		txtEmail.setText("");
+		txtNumber.setText("");
+		txtOtp.setText("");
+		lblOtpSend.setText("");
 	}
-	public void insertValueTofLogin(String name,long phone,long aadhaar,String email) throws ClassNotFoundException {
-		java.util.Date date=new java.util.Date();
-		java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-		Connection con=(Connection) MyConnection.getConn();
-		
-		try {
-			PreparedStatement stmt=(PreparedStatement) con.prepareStatement("insert into flogin values(?,?,?,?,?)");
-			//PreparedStatement stmt1=(PreparedStatement) con.prepareStatement("INSERT INTO `aadhaar_status` (`aadhar`) VALUES ('"+aadhaar+"')");
-			//we comment this because at in databse we already added trigger called after_insertion_flogin
-			 
-			stmt.setString(1, name);
-			stmt.setLong(2, phone);
-			stmt.setString(3, email);
-			stmt.setLong(4, aadhaar);
-			stmt.setDate(5, sqlDate);
-			
-			stmt.executeUpdate();
-			
-			//stmt1.executeUpdate();
-			con.close();
-		}catch(SQLException e) {
-		e.getStackTrace();	
-		}
-	}
+	
+	
+
 }

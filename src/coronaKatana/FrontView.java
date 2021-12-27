@@ -1,257 +1,542 @@
 package coronaKatana;
 
+import hospitalEnd.AdminLogin;
+import hospitalEnd.CenterLoggedin;
+import hospitalEnd.CenterLogin;
+
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 import java.awt.*;
 
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 
 public class FrontView extends JFrame
 {
 	public static JFrame f1;
-	public Container c=getContentPane();
-	static LeftPanel LP=new LeftPanel();
-	static StateWiseUpdate SWU=new StateWiseUpdate();
-	static Login LloginReg=new Login();
-	static Login Llogin=new Login(1);
+	//This is to create an object of LeftPanel class
+	public static LeftPanel LP=new LeftPanel();
+	public static Titlebar TB=new Titlebar();
+
+	public static StateWiseUpdate SWU=new StateWiseUpdate();
+	public static Login Llogin=new Login();
 	//static LoginPanel LPanel=new LoginPanel();
-	static Registration RRR=new Registration();
-	static home hm=new home();
-	//static Loggedin Loggin=new Loggedin(null,null,null,null,0);
-	//=new Loggedin(null,null,null,null,0);
-	
+	public static home hm=new home();
+	public static Registration RRR=new Registration();
+
+	public static Loggedin LI=new Loggedin();
+	public static SlotBook SB=new SlotBook();
+	public static AdminLogin AL=new AdminLogin();
+	public static CenterLogin CL=new CenterLogin();
+	public static contact cnt=new contact();
+	//public static javachart JC=new javachart();
+
+	public Container c=getContentPane();
+
 	public FrontView() {
+		//Hide the titlebar
+		setUndecorated(true);
+
 		setLayout(null);
 		setVisible(true);
-		c.add(RRR);
-		c.add(Llogin);
+
+		TB.setVisible(true);
+
 		f1=this;
 		//c.add(f1=this);
-	//	Loggin.setVisible(false);
-		LloginReg.setVisible(false);
+		//	Loggin.setVisible(false);
+
 		//FrontView.Loggin.setVisible(false);
-				LoginPanel.Llogin.setVisible(false);
-				LoginPanel.LloginReg.setVisible(false);
-				//Loggin.setVisible(false);
+
+		//Loggin.setVisible(false);
 		setTitle("Login");
 		//setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setMinimumSize(new Dimension(800, 600));
-		setBounds(0,0,1450,720);
+		setBounds(50,50,1450,720);
 		c.add(LP);
+		c.add(TB);
+		c.add(RRR);
+		c.add(Llogin);
+		c.add(SB);
 		c.add(SWU);
+		c.add(hm);
+		c.add(AL);
+		c.add(CL);
+		c.add(cnt);
+		//c.add(JC);
+
 		//c.add(LPanel);
-		c.add(LoginPanel.LloginReg);
-		
-	//	c.add(Loggin);
-	//	c.add(Loggin);
+
+
+		//	c.add(Loggin);
+		//	c.add(Loggin);
 		//c.remove(Loggin);
 		//c.add(Login.llll);
-		
-		
+
+
 		//FrontView.Loggin.setVisible(false);
-		LoginPanel.Llogin.setVisible(false);
-		LoginPanel.LloginReg.setVisible(false);
+
 		//Loggin.setVisible(false);
-		
+
 		c.add(f1=this);
-		
+
+
+
 	}
-	
+
 	public static void main(String[] args) {
 		new FrontView();
+
+
 	}
 }
 
 //start LeftPanel
-	class LeftPanel extends JPanel {
+class LeftPanel extends JPanel
+{
 
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
-		
-		Color clr=new Color(51,54,69);
-		Color fnt=new Color(236, 240, 241);
-		JLabel title =new JLabel("COVID \n TRACKER",JLabel.CENTER);
-		
-		
-		JButton btnhome = new JButton("Home");
-		
-		JButton btnData = new JButton("State Wise Data");
-		JButton vaccination = new JButton("Vaccination");
-		JButton btnLogin = new JButton("Login/SignUp");
-		JButton btnContact = new JButton("Contact Us");
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
 
-		Cursor cursor=new Cursor(Cursor.HAND_CURSOR);
-		public LeftPanel() {
-			int w = 200;
-			setLayout(null);
-			setBounds(0, 0, w, 720);
-			setBackground(clr);
-
-			title.setBounds(0,0,w,100);
-			title.setBackground(new Color(100, 149, 237));
-			title.setForeground(Color.white);
-			title.setFont(new Font("Serif", Font.BOLD, 20));
-
-			btnhome.setBounds(0,150,w,50);
-			btnhome.setForeground(fnt);
-			add(btnhome);
-			btnhome.setFont(new Font("Californian FB", Font.BOLD, 18));
-			btnhome.setBorderPainted(false);
-			btnhome.setBackground(clr);
-			btnhome.setOpaque(true);
-			btnhome.addMouseListener(new java.awt.event.MouseAdapter() {
-				public void mouseEntered(java.awt.event.MouseEvent evt) {
-					btnhome.setBackground(new Color(32, 35, 50));
-
-					btnhome.setCursor(cursor);
-				}
-				public void mouseExited(java.awt.event.MouseEvent evt) {
-					btnhome.setBackground(new Color(51, 54, 69));
-				}
-			});
-			btnhome.setFocusPainted(false);
-		
-			btnData.setBounds(0, 200, w, 50);
-			btnData.setForeground(fnt);
-			btnData.setFont(new Font("Californian FB", Font.BOLD, 18));
-			btnData.setBorderPainted(false);
-			btnData.setBackground(clr);
-			btnData.setOpaque(true);
-			btnData.addMouseListener(new java.awt.event.MouseAdapter() {
-				public void mouseEntered(java.awt.event.MouseEvent evt) {
-					btnData.setBackground(new Color(32, 35, 50));
-
-					btnData.setCursor(cursor);
-				}
-				public void mouseExited(java.awt.event.MouseEvent evt) {
-					btnData.setBackground(new Color(51, 54, 69));
-				}
-			});
-			btnData.setFocusPainted(false);
-
-			vaccination.setBounds(0, 250, w, 50);
-			vaccination.setForeground(fnt);
-			vaccination.setFont(new Font("Californian FB", Font.BOLD, 18));
-			vaccination.setBorderPainted(false);
-			vaccination.setBackground(clr);
-			vaccination.setOpaque(true);
-			vaccination.addMouseListener(new java.awt.event.MouseAdapter() {
-				public void mouseEntered(java.awt.event.MouseEvent evt) {
-					vaccination.setBackground(new Color(32, 35, 50));
-					vaccination.setCursor(cursor);
-				}
-
-				public void mouseExited(java.awt.event.MouseEvent evt) {
-					vaccination.setBackground(new Color(51, 54, 69));
-				}
-			});
-			vaccination.setFocusPainted(false);
-
-			btnLogin.setBounds(0, 300, w, 50);
-			btnLogin.setForeground(fnt);
-			btnLogin.setFont(new Font("Californian FB", Font.BOLD, 18));
-			btnLogin.setBorderPainted(false);
-			btnLogin.setBackground(new Color(51, 54, 69));
-			btnLogin.setOpaque(true);
-			btnLogin.addMouseListener(new java.awt.event.MouseAdapter() {
-				public void mouseEntered(java.awt.event.MouseEvent evt) {
-					btnLogin.setBackground(new Color(32, 35, 50));
-					btnLogin.setCursor(cursor);
-				}
-				public void mouseExited(java.awt.event.MouseEvent evt) {
-					btnLogin.setBackground(new Color(51, 54, 69));
-				}
-			});
-			btnLogin.setFocusPainted(false);
+	Color clr=new Color(51,54,69);
+	Color fnt=new Color(236, 240, 241);
+	JLabel title =new JLabel("COVID \n TRACKER",JLabel.CENTER);
 
 
-			btnContact.setBounds(0, 350, w, 50);
-			btnContact.setForeground(fnt);
-			btnContact.setFont(new Font("Californian FB", Font.BOLD, 18));
-			btnContact.setBorderPainted(false);
-			btnContact.setBackground(clr);
-			btnContact.setOpaque(true);
-			btnContact.addMouseListener(new java.awt.event.MouseAdapter() {
-				public void mouseEntered(java.awt.event.MouseEvent evt) {
-					btnContact.setBackground(new Color(32, 35, 50));
+	JButton btnhome = new JButton("Home");
+	JButton btnData = new JButton("State Wise Data");
+	JButton vaccination = new JButton("Vaccination");
+	JButton btnLogin = new JButton("Login/SignUp");
+	JButton btnAdministrator = new JButton("Administrator");
+	JButton btnCenter = new JButton("Center Login");
+	JButton btnContact = new JButton("Contact Us");
 
-					btnContact.setCursor(cursor);
-				}
-				public void mouseExited(java.awt.event.MouseEvent evt) {
-					btnContact.setBackground(new Color(51, 54, 69));
-				}
-			});
-			btnContact.setFocusPainted(false);
+	Cursor cursor=new Cursor(Cursor.HAND_CURSOR);
+	public LeftPanel() {
+		int w = 200;
+		setLayout(null);
+		setBounds(0, 0, w, 720);
+		setBackground(clr);
 
-			add(title);
-			add(btnhome);
-			add(btnData);
-			add(vaccination);
-			add(btnLogin);
-			add(btnContact);
+		title.setBounds(0,0,w,100);
+		title.setBackground(new Color(100, 149, 237));
+		title.setForeground(Color.white);
+		title.setFont(new Font("Serif", Font.BOLD, 20));
 
-			btnhome.addActionListener(new ActionListener() {
+		btnhome.setBounds(0,150,w,50);
+		btnhome.setForeground(fnt);
+		add(btnhome);
+		btnhome.setFont(new Font("Californian FB", Font.BOLD, 18));
+		btnhome.setBorderPainted(false);
+		btnhome.setBackground(clr);
+		btnhome.setOpaque(true);
+		btnhome.addMouseListener(new java.awt.event.MouseAdapter() {
+			public void mouseEntered(java.awt.event.MouseEvent evt) {
+				btnhome.setBackground(new Color(32, 35, 50));
 
-				public void actionPerformed(ActionEvent arg0) {
-					System.out.println("actioper");
+
+				btnhome.setCursor(cursor);
+			}
+			public void mouseExited(java.awt.event.MouseEvent evt) {
+				btnhome.setBackground(new Color(51, 54, 69));
+			}
+		});
+		btnhome.setFocusPainted(false);
+
+		btnData.setBounds(0, 200, w, 50);
+		btnData.setForeground(fnt);
+		btnData.setFont(new Font("Californian FB", Font.BOLD, 18));
+		btnData.setBorderPainted(false);
+		btnData.setBackground(clr);
+		btnData.setOpaque(true);
+		btnData.addMouseListener(new java.awt.event.MouseAdapter() {
+			public void mouseEntered(java.awt.event.MouseEvent evt) {
+				btnData.setBackground(new Color(32, 35, 50));
+
+				btnData.setCursor(cursor);
+			}
+			public void mouseExited(java.awt.event.MouseEvent evt) {
+				btnData.setBackground(new Color(51, 54, 69));
+			}
+		});
+		btnData.setFocusPainted(false);
+
+		vaccination.setBounds(0, 250, w, 50);
+		vaccination.setForeground(fnt);
+		vaccination.setFont(new Font("Californian FB", Font.BOLD, 18));
+		vaccination.setBorderPainted(false);
+		vaccination.setBackground(clr);
+		vaccination.setOpaque(true);
+		vaccination.addMouseListener(new java.awt.event.MouseAdapter() {
+			public void mouseEntered(java.awt.event.MouseEvent evt) {
+				vaccination.setBackground(new Color(32, 35, 50));
+				vaccination.setCursor(cursor);
+			}
+
+			public void mouseExited(java.awt.event.MouseEvent evt) {
+				vaccination.setBackground(new Color(51, 54, 69));
+			}
+		});
+		vaccination.setFocusPainted(false);
+
+		btnLogin.setBounds(0, 300, w, 50);
+		btnLogin.setForeground(fnt);
+		btnLogin.setFont(new Font("Californian FB", Font.BOLD, 18));
+		btnLogin.setBorderPainted(false);
+		btnLogin.setBackground(new Color(51, 54, 69));
+		btnLogin.setOpaque(true);
+		btnLogin.addMouseListener(new java.awt.event.MouseAdapter() {
+			public void mouseEntered(java.awt.event.MouseEvent evt) {
+				btnLogin.setBackground(new Color(32, 35, 50));
+				btnLogin.setCursor(cursor);
+			}
+			public void mouseExited(java.awt.event.MouseEvent evt) {
+				btnLogin.setBackground(new Color(51, 54, 69));
+			}
+		});
+		btnLogin.setFocusPainted(false);
+
+		btnAdministrator.setBounds(0, 350, w, 50);
+		btnAdministrator.setForeground(fnt);
+		btnAdministrator.setFont(new Font("Californian FB", Font.BOLD, 18));
+		btnAdministrator.setBorderPainted(false);
+		btnAdministrator.setBackground(clr);
+		btnAdministrator.setOpaque(true);
+		btnAdministrator.addMouseListener(new java.awt.event.MouseAdapter() {
+			public void mouseEntered(java.awt.event.MouseEvent evt) {
+				btnAdministrator.setBackground(new Color(32, 35, 50));
+
+				btnAdministrator.setCursor(cursor);
+			}
+			public void mouseExited(java.awt.event.MouseEvent evt) {
+				btnAdministrator.setBackground(new Color(51, 54, 69));
+			}
+		});
+		btnAdministrator.setFocusPainted(false);
+
+		btnCenter.setBounds(0, 400, w, 50);
+		btnCenter.setForeground(fnt);
+		btnCenter.setFont(new Font("Californian FB", Font.BOLD, 18));
+		btnCenter.setBorderPainted(false);
+		btnCenter.setBackground(clr);
+		btnCenter.setOpaque(true);
+		btnCenter.addMouseListener(new java.awt.event.MouseAdapter() {
+			public void mouseEntered(java.awt.event.MouseEvent evt) {
+				btnCenter.setBackground(new Color(32, 35, 50));
+
+				btnCenter.setCursor(cursor);
+			}
+			public void mouseExited(java.awt.event.MouseEvent evt) {
+				btnCenter.setBackground(new Color(51, 54, 69));
+			}
+		});
+		btnCenter.setFocusPainted(false);
+
+		btnContact.setBounds(0, 450, w, 50);
+		btnContact.setForeground(fnt);
+		btnContact.setFont(new Font("Californian FB", Font.BOLD, 18));
+		btnContact.setBorderPainted(false);
+		btnContact.setBackground(clr);
+		btnContact.setOpaque(true);
+		btnContact.addMouseListener(new java.awt.event.MouseAdapter() {
+			public void mouseEntered(java.awt.event.MouseEvent evt) {
+				btnContact.setBackground(new Color(32, 35, 50));
+
+				btnContact.setCursor(cursor);
+			}
+			public void mouseExited(java.awt.event.MouseEvent evt) {
+				btnContact.setBackground(new Color(51, 54, 69));
+			}
+		});
+		btnContact.setFocusPainted(false);
+
+
+//		titlebar.setBounds(210,0,500,50);
+//		titlebar.setBackground(clr);
+//		add(titlebar);
+
+		add(title);
+		add(btnhome);
+		add(btnData);
+		add(vaccination);
+		add(btnLogin);
+		add(btnContact);
+		add(btnAdministrator);
+		add(btnCenter);
+
+		//btn data ka action listener nhi likha hai, add kro
+		btnhome.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent arg0) {
+				System.out.println("actioper");
 //					HPLoginS.setVisible(false);
 //					HP.setVisible(true);
-					LoginPanel.LloginReg.setVisible(false);
-					LoginPanel.Llogin.setVisible(false);
-					FrontView.SWU.setVisible(true);
-					//FrontView.LPanel.setVisible(false);
-				//	FrontView.Loggin.setVisible(false);
-					FrontView.RRR.setVisible(false);
-					FrontView.Llogin.setVisible(false);
-					
-					
-					
-				
-				}
-			});
-			vaccination.addActionListener(new ActionListener() {
+				FrontView.SB.setVisible(false);
+				FrontView.CL.setVisible(false);
 
-				public void actionPerformed(ActionEvent arg0) {
-					System.out.println("actioper");
+				FrontView.SWU.setVisible(false);
+				//FrontView.LPanel.setVisible(false);
+				//	FrontView.Loggin.setVisible(false);
+				FrontView.RRR.setVisible(false);
+				FrontView.Llogin.setVisible(false);
+				FrontView.hm.setVisible(true);
+
+
+
+
+			}
+		});
+		btnData.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent arg0) {
+				System.out.println("actioper");
+//					HPLoginS.setVisible(false);
+//					HP.setVisible(true);
+
+				FrontView.CL.setVisible(false);
+
+				FrontView.SB.setVisible(false);
+				FrontView.SWU.setVisible(true);
+				FrontView.hm.setVisible(false);
+				//FrontView.LPanel.setVisible(false);
+				//	FrontView.Loggin.setVisible(false);
+				FrontView.RRR.setVisible(false);
+				FrontView.Llogin.setVisible(false);
+
+
+
+
+			}
+		});
+		vaccination.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent arg0) {
+				System.out.println("actioper");
 //					HPLoginS.setVisible(false);
 //					HP.setVisible(false);
 //					HPChar.setVisible(true);
-					System.out.println("1234");
-					FrontView.SWU.setVisible(false);
-					//FrontView.LPanel.setVisible(false);
+				System.out.println("1234");
+				FrontView.SWU.setVisible(false);
+				FrontView.CL.setVisible(false);
+				FrontView.hm.setVisible(false);
+				//FrontView.LPanel.setVisible(false);
 				//FrontView.Loggin.setVisible(false);
-					FrontView.RRR.setVisible(false);
-					FrontView.Llogin.setVisible(false);
-					
-					
-				}
-			});
+				FrontView.RRR.setVisible(false);
+				FrontView.Llogin.setVisible(false);
+				FrontView.SB.setVisible(true);
 
-			btnLogin.addActionListener(new ActionListener() {
 
-				public void actionPerformed(ActionEvent arg0) {
-					System.out.println("actioper");
+			}
+		});
+
+		btnLogin.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent arg0) {
+				System.out.println("actioper");
+
+				FrontView.SWU.setVisible(false);
+				FrontView.CL.setVisible(false);
+				//FrontView.LPanel.setVisible(true);
+				FrontView.RRR.setVisible(true);
+				FrontView.Llogin.setVisible(true);
+				FrontView.hm.setVisible(false);
+
+			}
+		});
+
+		btnAdministrator.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent arg0) {
+				System.out.println("actioper");
 //					HP.setVisible(false);
 //					HPLoginS.setVisible(true);
-					FrontView.SWU.setVisible(false);
-					//FrontView.LPanel.setVisible(true);
-					FrontView.RRR.setVisible(true);
-					FrontView.Llogin.setVisible(true);
-					
-				}
-			});
-		}
+				FrontView.SB.setVisible(false);
+				FrontView.SWU.setVisible(false);
+				//FrontView.LPanel.setVisible(true);
+				FrontView.RRR.setVisible(false);
+				FrontView.Llogin.setVisible(false);
+				FrontView.hm.setVisible(false);
+				FrontView.CL.setVisible(false);
+				FrontView.AL.setVisible(true);
+
+			}
+		});
+		btnCenter.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent arg0) {
+				System.out.println("actioper");
+//					HP.setVisible(false);
+//					HPLoginS.setVisible(true);
+				FrontView.SB.setVisible(false);
+				FrontView.SWU.setVisible(false);
+				//FrontView.LPanel.setVisible(true);
+				FrontView.RRR.setVisible(false);
+				FrontView.Llogin.setVisible(false);
+				FrontView.hm.setVisible(false);
+				FrontView.AL.setVisible(false);
+				FrontView.CL.setVisible(true);
+				
+
+			}
+		});
+		btnContact.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent arg0) {
+//				System.out.println("actioper");
+//					FrontView.HP.setVisible(false);
+//					HPLoginS.setVisible(true);
+				FrontView.SWU.setVisible(false);
+				FrontView.RRR.setVisible(false);
+				FrontView.Llogin.setVisible(false);
+				FrontView.hm.setVisible(false);
+				FrontView.SB.setVisible(false);
+				FrontView.AL.setVisible(false);
+				FrontView.CL.setVisible(false);
+				FrontView.SB.setVisible(false);
+				FrontView.SWU.setVisible(false);
+
+				FrontView.cnt.setVisible(true);
+
+			}
+		});
 	}
+}
+	/*
+		JPanel to add a custom Titlebar
+    	Work : Pending
+
+	 */
+class Titlebar extends JPanel{
+	FrontView f2;
+		static Point compcords;
+	public Titlebar()
+	{
+		setLayout(null);
+		setVisible(true);
+		setBounds(200, 0, 1250, 50);
+		setBackground(Color.white);
+		compcords=null;
+		this.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				compcords=null;
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				compcords=e.getPoint();
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+
+			}
+		});
+
+		this.addMouseMotionListener(new MouseMotionListener() {
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				Point curcords=e.getLocationOnScreen();
+				FrontView.f1.setLocation(curcords.x-compcords.x,curcords.y-compcords.y);
+			}
+
+			@Override
+			public void mouseMoved(MouseEvent e) {
+
+			}
+		});
+
+
+//		setBorder(new CompoundBorder(
+//				BorderFactory.createMatteBorder(0, 0, 5, 0, Color.black),
+//				BorderFactory.createMatteBorder(0, 0,0, 0, Color.white)));
+		JLabel mainhead=new JLabel("#UniteToFightCorona",JLabel.CENTER);
+		mainhead.setBounds(30,0,300,40);
+		mainhead.setFont(new Font("Serif", Font.BOLD, 22));
+		mainhead.setForeground(Color.black);
+		mainhead.setBackground(Color.white);
+		mainhead.setOpaque(true);
+		add(mainhead);
+
+		JLabel l1=new JLabel();
+		l1.setBounds(1200,10,40,30);
+		l1.setForeground(Color.white);
+		l1.setBackground(Color.white);
+		l1.setOpaque(true);
+		//l1.setBorder(BorderFactory.createLineBorder(new Color(	51,54,69),5));
+		Imagescale icon = new Imagescale( new ImageIcon(FrontView.class.getResource("/close48.png")));
+		l1.setIcon( icon );
+		//l1.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\LEO\\Desktop\\close48.png").getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT)));
+		add(l1);
+
+		l1.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.exit(0);
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				l1.setBackground(Color.red);
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				l1.setBackground(Color.white);
+			}
+		});
+
+	//	Code to add Image to a Button
+
+//		JButton button = new JButton();
+//		button.setBounds(1150,0,90,45);
+//		button.setBackground(Color.white);
+//		button.setOpaque(true);
+//		try
+//		{
+//			Image img = ImageIO.read(FrontView.class.getResource("/error.png"));
+//			button.setIcon(new ImageIcon(img));
+//		}
+//		catch (Exception ex)
+//		{
+//			System.out.println(ex);
+//		}
+//		add(button);
+//
+//		button.addActionListener(new ActionListener()
+//		{
+//			public void actionPerformed(ActionEvent arg0) {
+//				System.exit(0);
+//			}
+//		});
+	}
+}
+
 //End LeftPanel

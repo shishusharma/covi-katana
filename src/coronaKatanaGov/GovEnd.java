@@ -199,7 +199,7 @@ class GovEndPanel extends JPanel
     
     public void save() {
 		try {
-			
+			int id=Integer.parseInt(getID());
 			String state=cmb_state.getSelectedItem().toString();
 			String dist=cmb_dist.getSelectedItem().toString();
 			String center_area=tf_area.getText();
@@ -207,10 +207,6 @@ class GovEndPanel extends JPanel
 			int pinCode=Integer.parseInt(tf_pin.getText());
 							
 			Connection con=MyConnection.getConn();
-			IdIncrement idIncrement=new IdIncrement();
-
-			int id=idIncrement.increment(con);
-			if(id>100) {
 			PreparedStatement ps=con.prepareStatement("insert into addvaccinecenter values(?,?,?,?,?,?)");
 			ps.setInt(1, id);
 			ps.setString(2, state);
@@ -221,7 +217,7 @@ class GovEndPanel extends JPanel
 			ps.executeUpdate();
 			JOptionPane.showMessageDialog(null,"Successfully saved");
 			setClearFields();
-			}
+			
 		}catch(Exception ex) {
 			System.out.println(ex);
 			JOptionPane.showMessageDialog(this, String.valueOf(ex));
@@ -230,16 +226,16 @@ class GovEndPanel extends JPanel
     
     public void setClearFields() {
     	cmb_state.setSelectedIndex(0);
-    	//tf_district.setText("");
+    	tf_district.setText("");
     	tf_area.setText("");
     	tf_centName.setText("");
     	tf_pin.setText("");
     	}
     
-    public String getID(Connection con) {
+    public String getID() {
 		String id="1";
 		try {
-//		Connection con=MyConnection.getConn();
+		Connection con=MyConnection.getConn();
 		PreparedStatement ps=con.prepareStatement("select max(center_id)+1 from addvaccinecenter");
 		//ps=con.prepareStatement(id);
 		ResultSet rs=ps.executeQuery();
