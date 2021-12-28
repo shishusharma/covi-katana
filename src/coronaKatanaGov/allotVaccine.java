@@ -10,51 +10,50 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
+import javax.swing.*;
+import javax.swing.border.CompoundBorder;
 import com.Myconnection.MyConnection;
 
 import api.fun.DatePicker;
+/*
+	class allotVaccine : Provides the facility of adding vaccines to the inventory.
+							It can be used only by the admin.
+ */
 
-public class allotVaccine extends JPanel{
-	
-	
+public class allotVaccine extends JPanel {
 	
 	
 	public allotVaccine() {
 		
 		int x=0,y=0;
-		JLabel add_vac=new JLabel("Add Vaccine");
+
+		//adding labels,textfields and buttons and their styling
+		JLabel add_vac=new JLabel("Add Vaccines to the Inventory:");
         add_vac.setFont(new Font("Georgia", Font.BOLD, 18));
-        add_vac.setBounds(70+x,0+y,150,70);
+        add_vac.setBounds(60+x,10+y,350,50);
         add(add_vac);
         
-        JLabel lbl_quntity=new JLabel("Quntity:");
-        lbl_quntity.setFont(new Font("Georgia", Font.BOLD, 13));
-        lbl_quntity.setBounds(x+0,30+y,150,70);
+        JLabel lbl_quntity=new JLabel("Quantity:");
+        lbl_quntity.setFont(new Font("Georgia", Font.BOLD, 16));
+        lbl_quntity.setBounds(75,60+y,150,30);
         add(lbl_quntity);
         
         JLabel lbl_manfDT=new JLabel("Manufacture Date:");
-        lbl_manfDT.setFont(new Font("Georgia", Font.BOLD, 13));
-        lbl_manfDT.setBounds(x+0,70+y,150,70);
+        lbl_manfDT.setFont(new Font("Georgia", Font.BOLD, 16));
+        lbl_manfDT.setBounds(350,60+y,180,30);
         add(lbl_manfDT);
         
         JLabel lbl_expfDT=new JLabel("Expiry Date:");
-        lbl_expfDT.setFont(new Font("Georgia", Font.BOLD, 13));
-        lbl_expfDT.setBounds(x+0,110+y,150,70);
+        lbl_expfDT.setFont(new Font("Georgia", Font.BOLD, 16));
+        lbl_expfDT.setBounds(700,60+y,150,30);
         add(lbl_expfDT);
         
         JTextField txt_quntity=new JTextField();
-        txt_quntity.setBounds(x+160,50+y,130,25);
+        txt_quntity.setBounds(170,65+y,80,25);
         add(txt_quntity);
                 
         JTextField txt_manfDT=new JTextField();
-        txt_manfDT.setBounds(x+160,90+y,130,25);
+        txt_manfDT.setBounds(530,65+y,100,25);
         
         add(txt_manfDT);
         
@@ -91,7 +90,7 @@ public class allotVaccine extends JPanel{
         
         
         JTextField txt_expfDT=new JTextField();
-        txt_expfDT.setBounds(x+160,130+y,130,25);
+        txt_expfDT.setBounds(830,63+y,100,25);
         add(txt_expfDT);
         
         txt_expfDT.addMouseListener(new MouseListener() {
@@ -126,8 +125,9 @@ public class allotVaccine extends JPanel{
         
                
         
-        JButton add_Vacc=new JButton("ADD");
-        add_Vacc.setBounds(150+x,160,70,25);
+        JButton add_Vacc=new JButton("Add to Inventory");
+        add_Vacc.setBounds(450+x,100,200,25);
+		add_Vacc.setFont(new Font("Georgia", Font.BOLD, 18));
         add_Vacc.setBackground(new Color(93,173,226));
         add_Vacc.setOpaque(true);
         add(add_Vacc);
@@ -160,10 +160,8 @@ public class allotVaccine extends JPanel{
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				if(k==1)
-					JOptionPane.showConfirmDialog(null, "Successfully Saved");
-					
-				
+
+
 			}
 				
 			}
@@ -186,12 +184,16 @@ public class allotVaccine extends JPanel{
 			}
         	
         });
-        
+
+        //setting up the layout and the dimensions
         setLayout(null);
         setBackground(new Color(204,153,255));
         setVisible(true);
         
-        setBounds(720,300,300,200);
+        setBounds(80,525,1070,140);
+		setBorder(new CompoundBorder(
+				BorderFactory.createMatteBorder(0, 0, 0,0, Color.pink),
+				BorderFactory.createMatteBorder(5, 0, 0, 0, Color.black)));
 	}
 	
 //	public static void main(String[] args) {

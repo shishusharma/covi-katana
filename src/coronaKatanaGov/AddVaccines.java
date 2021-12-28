@@ -1,23 +1,19 @@
 package coronaKatanaGov;
 
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.awt.Color;
-import java.awt.Container;
 
-import javax.swing.JTable;
+import javax.swing.border.CompoundBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -27,40 +23,46 @@ import com.Myconnection.MyConnection;
 import api.fun.DatePicker;
 import api.fun.getTotalVAccine;
 
-import javax.swing.JTextField;
-import javax.swing.RowFilter;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+/*
+    class AddVaccines : Acts as the admin dashboard.
+                        Has all the features for the admin including adding a new center,
+                        adding vaccines to the inventory and alloting the vaccines from inventory
+                        to any of the centers available on a JTable.
+ */
 
-
-public class AddVaccines extends JFrame
+public class AddVaccines extends JPanel
 {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	AddVacPanel vacPanel=new AddVacPanel();
-    Container c=getContentPane();
-   Container c2=getContentPane();
+     *
+     */
+    private static final long serialVersionUID = 1L;
+    public static AddVacPanel vacPanel=new AddVacPanel();
+//    Container c=getContentPane();
+//    Container c2=getContentPane();
 
     public AddVaccines()
     {
-        c.add(vacPanel);
-        setBounds(0,0,1450,720);
+        //setting up the layout and the dimensions
+        add(vacPanel);
+        setBounds(200,50,1250,670);
         setVisible(true);
         setLayout(null);
+        // JOptionPane.showConfirmDialog(null,"lskdjflksjf");
     }
 
-    public static void main(String[] args) {
-        new AddVaccines();
-    }
+    // public static void main(String[] args) {
+//        new AddVaccines();
+//    }
 }
 class AddVacPanel extends JPanel
 {
-	
-    JLabel lbl_header,lbl_search,lbl_dist,lbl_pin,lbl_state,lbl_last2days,lbl_avl,lbl_booked;
-    JTextField tf_dist,tf_pin,tf_name;
+
+    JLabel lbl_header,bg_allot,bg_table,lbl_search,lbl_allot,lbl_dist,lbl_pin,lbl_state,lbl_last2days,lbl_booked;
+    public static JLabel lbl_avl;
+    JTextField tf_dist,tf_pin,tf_state;
     JButton btn_search;
     JScrollPane jsp;
     JLabel lbl_addVac,lbl_qty,lbl_date;
@@ -68,293 +70,298 @@ class AddVacPanel extends JPanel
     JButton btn_add;
     static String []header={"Select Center","State","District","Pincode","Center code","Center Name"};
     static DefaultTableModel tm=new DefaultTableModel(header,0) {
-    	public Class<?> getColumnClass(int column){
-    		switch (column) {			
-            case 0:
-                return Boolean.class;
-            case 1:
-                return String.class;
-            case 2:
-                return String.class;
-            case 3:
-                return Integer.class;
-            case 4:
-            	return Integer.class;
-            default:
-                return String.class;
+        public Class<?> getColumnClass(int column){
+            switch (column) {
+                case 0:
+                    return Boolean.class;
+                case 1:
+                    return String.class;
+                case 2:
+                    return String.class;
+                case 3:
+                    return Integer.class;
+                case 4:
+                    return Integer.class;
+                default:
+                    return String.class;
+            }
         }
-    	}
     };;
-    
-   // sorter=new TableRowSorter<>(tm);
-    JTable tbl_centers;
-   
 
-    
-    getTotalVAccine gt=new getTotalVAccine();
-    
+    // sorter=new TableRowSorter<>(tm);
+    JTable tbl_centers;
+
+
+
+    public static getTotalVAccine gt=new getTotalVAccine();
+
     public AddVacPanel()
     {
-    	
-//        String data[][]={ {"101","Amit","670000"},
-//                {"102","Jai","780000"},
-//                {"101","Sachin","700000"}};
-//        String column[]={"ID","NAME","SALARY"};
-        setBounds(0,0,1450,550);
+        //setting up the layout and the dimensions
+        setBounds(0,0,1250,670);
         setVisible(true);
         setLayout(null);
+        setBackground(new Color(202, 219, 253));
+        setBorder(new CompoundBorder(
+                BorderFactory.createMatteBorder(70, 0, 0, 0, new Color(202, 219, 253)),
+                BorderFactory.createMatteBorder(5, 0, 0, 0, Color.black)));
         add(new allotVaccine());
 
-        lbl_header=new JLabel("ALOT VACCINES TO THE CENTER",JLabel.CENTER);
-        lbl_header.setBounds(0,0,1450,100);
+
+        //adding labels,textfields and buttons and their styling
+
+        lbl_header=new JLabel("Admin Dashboard",JLabel.LEFT);
+        lbl_header.setBounds(100,0,1250,90);
         lbl_header.setFont(new Font("Serif", Font.BOLD, 20));
-        lbl_header.setForeground(new Color(247,249,249));
-        lbl_header.setBackground(new Color(46, 134, 193));
-        lbl_header.setOpaque(true);
+        lbl_header.setForeground(Color.black);
+        //lbl_header.setBackground(new Color(46, 134, 193));
+        //lbl_header.setOpaque(true);
         add(lbl_header);
+
+        lbl_allot=new JLabel("Allot Vaccines at the required Centers.",JLabel.LEFT);
+        lbl_allot.setFont(new Font("Georgia", Font.BOLD, 18));
+        lbl_allot.setBounds(100,90,600,30);
+        add(lbl_allot);
+
+
+        JButton btnaddcenter=new JButton("Add Vaccination Centers");
+        btnaddcenter.setFont(new Font("Georgia", Font.BOLD, 16));
+        btnaddcenter.setBounds(610,90,320,28);
+        btnaddcenter.setBackground(new Color(93,173,226));
+        btnaddcenter.setOpaque(true);
+        add(btnaddcenter);
+
+
+
+        bg_allot=new JLabel();
+        //bg_allot.setFont(new Font("Georgia", Font.BOLD, 18));
+        bg_allot.setBackground(Color.white);
+        bg_allot.setBounds(80,140,1070,385);
+        bg_allot.setOpaque(true);
+        bg_allot.setBorder(new CompoundBorder(
+                BorderFactory.createMatteBorder(0, 0, 235,0, Color.pink),
+                BorderFactory.createMatteBorder(0, 0, 5, 0, Color.black)));
+        add(bg_allot);
 
 
 
         lbl_search=new JLabel("Search Vaccination Center:",JLabel.LEFT);
-        lbl_search.setFont(new Font("Georgia", Font.BOLD, 18));
-        lbl_search.setBounds(550,150,300,30);
         add(lbl_search);
+        lbl_search.setFont(new Font("Georgia", Font.BOLD, 18));
+        lbl_search.setBounds(50,10,300,30);
+        bg_allot.add(lbl_search);
 
-        lbl_state=new JLabel("By State:",JLabel.RIGHT);
+        lbl_state=new JLabel("Search By State/District/Pincode:",JLabel.LEFT);
         lbl_state.setFont(new Font("Georgia", Font.BOLD, 18));
-        lbl_state.setBounds(280,190,150,30);
+        lbl_state.setBounds(80,50,400,30);
         add(lbl_state);
-
-        
-        
-        
-        
-        
-        lbl_dist=new JLabel("By District:",JLabel.RIGHT);
-        lbl_dist.setFont(new Font("Georgia", Font.BOLD, 18));
-        lbl_dist.setBounds(600,190,150,30);
-        add(lbl_dist);
-
-        lbl_pin=new JLabel("By Pincode:",JLabel.RIGHT);
-        lbl_pin.setFont(new Font("Georgia", Font.BOLD, 18));
-        lbl_pin.setBounds(920,190,150,30);
-        add(lbl_pin);
-
-//        dd(lbl_last2days);
-//			lbl_last2days=new JLabel("Last 2 Days Data :");
-//        lbl_last2days.setFont(new Font("Georgia", Font.BOLD, 18));
-//        lbl_last2days.setBounds(150,510,200,30);
-//        a
-        /*
-            The available data will be shown when the user selects
-            any particular center.
-         */
-
-//        int avl=200;
-//        int waitlist=51;
-
-        lbl_avl=new JLabel("Available : "+gt.getTotalVaccine());
-        lbl_avl.setFont(new Font("Georgia", Font.BOLD, 18));
-        lbl_avl.setBounds(370,510,150,30);
-        add(lbl_avl);
-
-//        lbl_booked=new JLabel("Waitlist : "+waitlist);
-//        lbl_booked.setFont(new Font("Georgia", Font.BOLD, 18));
-//        lbl_booked.setBounds(550,510,120,30);
-//        add(lbl_booked);
+        bg_allot.add(lbl_state);
 
 
+        tf_state=new JTextField();
+        tf_state.setBounds(500,55,150,25);
+        add(tf_state);
+        bg_allot.add(tf_state);
 
 
-        tf_name=new JTextField();
-        tf_name.setBounds(440,195,150,25);
-        add(tf_name);
-         
-        
-//        tf_name.getDocument().addDocumentListener(new DocumentListener() {
-//			
-//			@Override
-//			public void removeUpdate(DocumentEvent e) {
-//				// TODO Auto-generated method stub
-//				search(tf_name.getText());
-//				
-//			}
-//			
-//			@Override
-//			public void insertUpdate(DocumentEvent e) {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//			
-//			@Override
-//			public void changedUpdate(DocumentEvent e) {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//			public void search(String str) {
-//	            if (str.length() == 0) {
-//	               sorter.setRowFilter(null);
-//	            } else {
-//	               sorter.setRowFilter(RowFilter.regexFilter(str));
-//	            }
-//	         }
-//		});
-//        
-
-        tf_dist=new JTextField();
-        tf_dist.setBounds(760,195,150,22);
-        add(tf_dist);
-
-        tf_pin=new JTextField();
-        tf_pin.setBounds(1080,195,100,22);
-        add(tf_pin);
-
-        btn_search=new JButton("Search Center");
-        btn_search.setBounds(620,240,150,30);
-        btn_search.setBackground(new Color(93,173,226));
-        btn_search.setOpaque(true);
-        btn_search.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btn_search.setBackground(new Color(46,134,193));
-            }
-
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btn_search.setBackground(new Color(93,173,226));
-            }
-        });
-        btn_search.setFocusPainted(false);
-        add(btn_search);
-        
+        //A table to shwo the admin the list of all the centers
         tbl_centers=new JTable(tm);
-       // tbl_centers.setRowSorter(sorter);
+        // tbl_centers.setRowSorter(sorter);
         add(jsp=new JScrollPane(tbl_centers));
-        jsp.setBounds(200,300,500,200);
-        
-        JLabel add_vac=new JLabel("Add Vaccine");
-        add_vac.setFont(new Font("Georgia", Font.BOLD, 18));
-        add_vac.setBounds(750,270,150,70);
-        add(add_vac);
-        
-        lbl_addVac=new JLabel("Add Vaccine :",JLabel.RIGHT);
+        jsp.setBounds(50,195,700,170);
+        //bg_table.add(tbl_centers);
+        jsp.setOpaque(true);
+        jsp.setBorder(new CompoundBorder(
+                BorderFactory.createMatteBorder(0, 0, 0, 0, Color.pink),
+                BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black)));
+        bg_allot.add(jsp);
+        JLabel selectlbl=new JLabel("Select the centers to allot the vaccines.",JLabel.LEFT);
+        selectlbl.setBackground(Color.pink);
+        selectlbl.setFont(new Font("Georgia", Font.BOLD, 18));
+        selectlbl.setBounds(50,150,500,50);
+        selectlbl.setOpaque(true);
+        selectlbl.setBorder(new CompoundBorder(
+                BorderFactory.createMatteBorder(0, 0, 0, 0, Color.pink),
+                BorderFactory.createMatteBorder(0, 0, 0, 0, Color.black)));
+
+        add(selectlbl);
+        bg_allot.add(selectlbl);
+
+        bg_table=new JLabel();
+        bg_table.setBackground(Color.orange);
+        bg_table.setBounds(765,223,300,140);
+        bg_table.setOpaque(true);
+        bg_table.setBorder(new CompoundBorder(
+                BorderFactory.createMatteBorder(0, 0, 0, 0, Color.pink),
+                BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black)));
+        add(bg_table);
+        bg_allot.add(bg_table);
+
+
+
+
+        //A label to display the total vaccines available in the inventory that can be alloted to centers
+        lbl_avl=new JLabel("Available Vaccines: "+gt.getTotalVaccine(),JLabel.CENTER);
+        add(lbl_avl);
+        lbl_avl.setBackground(Color.white);
+        lbl_avl.setFont(new Font("Georgia", Font.BOLD, 18));
+        lbl_avl.setBounds(770,180,300,40);
+        lbl_avl.setOpaque(true);
+        bg_allot.add(lbl_avl);
+
+
+        //Providing the faciity to allot vaccines to the centers selected from the table
+        lbl_addVac=new JLabel("Allot Vaccines",JLabel.CENTER);
         lbl_addVac.setFont(new Font("Georgia", Font.BOLD, 18));
-        lbl_addVac.setBounds(50,580,250,30);
+        lbl_addVac.setBounds(20,10,250,30);
+        lbl_addVac.setOpaque(true);
+        lbl_addVac.setBackground(Color.white);
+        lbl_addVac.setBorder(new CompoundBorder(
+                BorderFactory.createMatteBorder(1, 1, 0, 1, Color.black),
+                BorderFactory.createMatteBorder(0, 0, 0, 0, Color.black)));
         add(lbl_addVac);
+        bg_table.add(lbl_addVac);
 
-        lbl_qty=new JLabel("Quantity :",JLabel.RIGHT);
-        lbl_qty.setFont(new Font("Georgia", Font.BOLD, 18));
-        lbl_qty.setBounds(320,580,100,30);
+        lbl_qty=new JLabel("Quantity :",JLabel.LEFT);
+        lbl_qty.setFont(new Font("Georgia", Font.BOLD, 16));
+        lbl_qty.setBounds(40,45,100,30);
+        //lbl_qty.setBackground(Color.white);
+//        lbl_qty.setBorder(new CompoundBorder(
+//                BorderFactory.createMatteBorder(0, 1, 0, 1, Color.black),
+//                BorderFactory.createMatteBorder(0, 30, 0, 0, Color.white)));
+
+//        lbl_qty.setOpaque(true);
         add(lbl_qty);
+        bg_table.add(lbl_qty);
 
-        lbl_date=new JLabel("For Date :",JLabel.RIGHT);
-        lbl_date.setFont(new Font("Georgia", Font.BOLD, 18));
-        lbl_date.setBounds(570,580,100,30);
+        lbl_date=new JLabel("For Date :",JLabel.LEFT);
+        lbl_date.setFont(new Font("Georgia", Font.BOLD, 16));
+        lbl_date.setBounds(40,80,250,35);
+        lbl_date.setBackground(Color.white);
+//        lbl_date.setBorder(new CompoundBorder(
+//                BorderFactory.createMatteBorder(0, 1, 1, 1, Color.black),
+//                BorderFactory.createMatteBorder(0, 30, 0, 0, Color.white)));
+//        lbl_date.setOpaque(true);
         add(lbl_date);
+        bg_table.add(lbl_date);
 
         tf_qty=new JTextField();
-        tf_qty.setBounds(430,585,100,25);
+        tf_qty.setBounds(150,50,100,23);
         add(tf_qty);
+        bg_table.add(tf_qty);
 
-        
-        ///
-      
-        
-        
-       
         tf_date=new JTextField();
-        tf_date.setBounds(680,585,100,25);
+        tf_date.setBounds(150,85,100,23);
         add(tf_date);
-        
-        JButton btn_date=new JButton("a");
-        btn_date.setFont(new Font("Georgia", Font.BOLD, 18));
-        btn_date.setBounds(781,580,30,30);
-        btn_date.setBackground(new Color(93,103,226));
-        btn_date.setOpaque(true);
-        add(btn_date);
-        
-        
-        btn_date.addActionListener(new ActionListener() {
+        bg_table.add(tf_date);
+        tf_date.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // TODO Auto-generated method stub
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				final JFrame f = new JFrame();
-				tf_date.setText(new DatePicker(f).setPickedDate());
-				
-			}
-        	
+            }
+            @Override
+            public void mousePressed(MouseEvent e) {
+                // TODO Auto-generated method stub
+                final JFrame f = new JFrame();
+                tf_date.setText(new DatePicker(f).setPickedDate());
+            }
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                // TODO Auto-generated method stub
+
+            }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                // TODO Auto-generated method stub
+
+
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                // TODO Auto-generated method stub
+
+            }
         });
 
-        btn_add=new JButton("ADD");
-        btn_add.setFont(new Font("Georgia", Font.BOLD, 18));
-        btn_add.setBounds(550,630,80,30);
+        btnaddcenter.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                JOptionPane jop = new JOptionPane();
+                JDialog dialog = jop.createDialog("AddCenter");
+                dialog.setSize(1250, 730);
+                dialog.setLocationRelativeTo(null);
+                dialog.setContentPane(new GovEnd());
+                dialog.setVisible(true);
+            }
+            });
+                btn_add=new JButton("ALLOT");
+        btn_add.setFont(new Font("Georgia", Font.BOLD, 16));
+        btn_add.setBounds(110,110,120,23);
         btn_add.setBackground(new Color(93,173,226));
         btn_add.setOpaque(true);
         btn_add.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent arg0) {
-				System.out.println("add vaccinde");
-				int k=0,cnt=0,totalvac=0;
-				
-				for(int i=0;i<tbl_centers.getRowCount();i++) {
-					Boolean chked=Boolean.valueOf(tbl_centers.getValueAt(i, 0).toString());						
-					if ((chked)) {
-						cnt++;
-					}
-					
-				}
-				
-				totalvac=cnt*Integer.parseInt(tf_qty.getText());
-				if(gt.getTotalVaccine()>=(totalvac)) {
-				for(int i=0;i<tbl_centers.getRowCount();i++) {
-					Boolean chked=Boolean.valueOf(tbl_centers.getValueAt(i, 0).toString());
-					int id = Integer.parseInt(tbl_centers.getValueAt(i, 4).toString());
-						
-					if ((chked)/*&&(gt.getTotalVaccine()>=Integer.parseInt(tf_qty.getText()))*/) {
-						Connection con=MyConnection.getConn();
-						PreparedStatement ps;
-						try {
-							ps = con.prepareStatement("insert into allotedVaccine values(?,?,?)");
-							ps.setInt(1, id);
-							ps.setString(2, tf_date.getText());
-							ps.setInt(3,Integer.parseInt(tf_qty.getText()));
-							ps.executeUpdate();
-							k=1;
-						} catch (SQLException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-							
-						}
-					}
-					
-				}
-				if(k==1) {
-					JOptionPane.showConfirmDialog(null, "Successfully Saved");
-					gt.getTotalVaccine();
-					
-				}
-				else {
-					JOptionPane.showConfirmDialog(null, "Something went Worng please Try Later");
-				}
-			}else {
-				JOptionPane.showConfirmDialog(null, "Please Checked OR Vaccine is not Availave \n Quntity must be <='"+gt.getTotalVaccine()+"'");
-			}
-								
-			}
+            public void actionPerformed(ActionEvent arg0) {
+                System.out.println("add vaccinde");
+                int k=0,cnt=0,totalvac=0;
+
+                for(int i=0;i<tbl_centers.getRowCount();i++) {
+                    Boolean chked=Boolean.valueOf(tbl_centers.getValueAt(i, 0).toString());
+                    if ((chked)) {
+                        cnt++;
+                    }
+
+                }
+
+                totalvac=cnt*Integer.parseInt(tf_qty.getText());
+
+                //Checking if the alloted vaccines is less than that available in the inventory
+                if(gt.getTotalVaccine()>=(totalvac)) {
+                    for(int i=0;i<tbl_centers.getRowCount();i++) {
+                        Boolean chked=Boolean.valueOf(tbl_centers.getValueAt(i, 0).toString());
+                        int id = Integer.parseInt(tbl_centers.getValueAt(i, 4).toString());
+
+                        if ((chked)/*&&(gt.getTotalVaccine()>=Integer.parseInt(tf_qty.getText()))*/) {
+                            Connection con=MyConnection.getConn();
+                            PreparedStatement ps;
+                            try {
+                                ps = con.prepareStatement("insert into allotedVaccine values(?,?,?)");
+                                ps.setInt(1, id);
+                                ps.setString(2, tf_date.getText());
+                                ps.setInt(3,Integer.parseInt(tf_qty.getText()));
+                                ps.executeUpdate();
+                                k=1;
+                            } catch (SQLException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+
+                            }
+                        }
+
+                    }
+                    if(k==1) {
+                        JOptionPane.showConfirmDialog(null, "Successfully Saved");
+                        gt.getTotalVaccine();
+
+                    }
+                    else {
+                        JOptionPane.showConfirmDialog(null, "Something went Worng please Try Later");
+                    }
+                }else {
+                    JOptionPane.showConfirmDialog(null, "Please Checked OR Vaccine is not Availave \n Quntity must be <='"+gt.getTotalVaccine()+"'");
+                }
+
+            }
         });
-    
-        
-       ///search button
-        btn_search.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent arg0) {
-        		String dist=tf_dist.getText();
-        	}
-        });
-        
-        
+
+
+
+
         btn_add.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btn_add.setBackground(new Color(46,134,193));
-                
+
             }
-            
+
 
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btn_add.setBackground(new Color(93,173,226));
@@ -362,17 +369,18 @@ class AddVacPanel extends JPanel
         });
         btn_add.setFocusPainted(false);
         add(btn_add);
-        
+        bg_table.add(btn_add);
+
         showTable();
-        
+
         TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(tbl_centers.getModel());
-    	tbl_centers.setRowSorter(rowSorter);
-    	
-        tf_name.getDocument().addDocumentListener(new DocumentListener(){
+        tbl_centers.setRowSorter(rowSorter);
+
+        tf_state.getDocument().addDocumentListener(new DocumentListener(){
 
             @Override
             public void insertUpdate(DocumentEvent e) {
-                String text = tf_name.getText();
+                String text = tf_state.getText();
 
                 if (text.trim().length() == 0) {
                     rowSorter.setRowFilter(null);
@@ -383,7 +391,7 @@ class AddVacPanel extends JPanel
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                String text = tf_name.getText();
+                String text = tf_state.getText();
 
                 if (text.trim().length() == 0) {
                     rowSorter.setRowFilter(null);
@@ -398,57 +406,68 @@ class AddVacPanel extends JPanel
             }
 
         });
-    
 
+        JButton logout =new JButton("Logout");
+        add(logout);
+        logout.setBounds(1100,30,100,30);
+
+        logout.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AdminLogin.dialog.dispose();
+            }
+        });
 
     }
-    
-    
-    
+
+
+    //function to show the table data : all the centers
     public void showTable() {
-    	
-    	Connection con=(Connection) MyConnection.getConn();
-    	
-		try {
-			PreparedStatement stmt=(PreparedStatement) con.prepareStatement("select * from addvaccinecenter");
-			ResultSet rs=stmt.executeQuery();
-			
-			while(rs.next()) {
-				Object []obj= {false,rs.getString("center_state"),rs.getString("center_dist"),rs.getInt("center_pincode"),rs.getInt("center_id"),rs.getString("center_Name")};
-				tm.addRow(obj);
-				
-			}
-			
-			
-		}catch(Exception e) {
-			e.printStackTrace();
-			System.out.println(e);
-		}
+
+        //connceting to the database
+        Connection con=(Connection) MyConnection.getConn();
+
+        try {
+            //fetching data from the database
+            PreparedStatement stmt=(PreparedStatement) con.prepareStatement("select * from addvaccinecenter");
+            ResultSet rs=stmt.executeQuery();
+
+            while(rs.next()) {
+                Object []obj= {false,rs.getString("center_state"),rs.getString("center_dist"),rs.getInt("center_pincode"),rs.getInt("center_id"),rs.getString("center_Name")};
+                tm.addRow(obj);
+
+            }
+
+
+        }catch(Exception e) {
+            e.printStackTrace();
+            System.out.println(e);
+        }
     }
-    
+
 //    public int getTotalVaccine() {
 //    	int cnt=0;
 //    	Connection con=(Connection) MyConnection.getConn();
-//    	
+//
 //		try {
 //			PreparedStatement stmt=(PreparedStatement) con.prepareStatement("SELECT sum(IF(alloted_cen=0,1,0)&&IF(vac_status=0,1,0)) FROM `vaccine`");
 //			ResultSet rs=stmt.executeQuery();
-//			
-//			
+//
+//
 //			while(rs.next()) {
 //				cnt=rs.getInt(1);
-//				
+//
 //			}
-//			
-//			
+//
+//
 //		}catch(Exception e) {
 //			e.printStackTrace();
 //			System.out.println(e);
 //		}
-//		
+//
 //		return cnt;
 //    }
-   
-    
-    
+
+
+
 }

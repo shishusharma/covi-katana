@@ -27,6 +27,30 @@
 	<classpathentry kind="lib" path="E:/mapexgit/GoogleMaps-JavaSwing-master/lib/jxbrowser-6.23.1.jar"/>
 	<classpathentry kind="lib" path="E:/mapexgit/GoogleMaps-JavaSwing-master/lib/KControls.jar"/>
 	<classpathentry kind="lib" path="E:/mapexgit/GoogleMaps-JavaSwing-master/lib/MyLicense-1.0.jar"/>
+	<classpathentry kind="lib" path="src/used api/activation-1.1.jar"/>
+	<classpathentry kind="lib" path="src/used api/barcodes-7.0.2.jar"/>
+	<classpathentry kind="lib" path="src/used api/barcodes-7.0.2-sources.jar"/>
+	<classpathentry kind="lib" path="src/used api/font-asian-7.0.2.jar"/>
+	<classpathentry kind="lib" path="src/used api/font-asian-7.0.2-javadoc.jar"/>
+	<classpathentry kind="lib" path="src/used api/forms-7.0.2.jar"/>
+	<classpathentry kind="lib" path="src/used api/forms-7.0.2-sources.jar"/>
+	<classpathentry kind="lib" path="src/used api/hyph-7.0.2.jar"/>
+	<classpathentry kind="lib" path="src/used api/hyph-7.0.2-javadoc.jar"/>
+	<classpathentry kind="lib" path="src/used api/io-7.0.2.jar"/>
+	<classpathentry kind="lib" path="src/used api/io-7.0.2-sources.jar"/>
+	<classpathentry kind="lib" path="src/used api/javax.mail-1.6.2.jar"/>
+	<classpathentry kind="lib" path="src/used api/jcommon-1.0.23.jar"/>
+	<classpathentry kind="lib" path="src/used api/jfreechart-1.0.19.jar"/>
+	<classpathentry kind="lib" path="src/used api/json-20140107.jar"/>
+	<classpathentry kind="lib" path="src/used api/kernel-7.0.2.jar"/>
+	<classpathentry kind="lib" path="src/used api/kernel-7.0.2-sources.jar"/>
+	<classpathentry kind="lib" path="src/used api/layout-7.0.2.jar"/>
+	<classpathentry kind="lib" path="src/used api/layout-7.0.2-sources.jar"/>
+	<classpathentry kind="lib" path="src/used api/mysql-connector-java-5.0.8.jar"/>
+	<classpathentry kind="lib" path="src/used api/pdfa-7.0.2.jar"/>
+	<classpathentry kind="lib" path="src/used api/pdfa-7.0.2-sources.jar"/>
+	<classpathentry kind="lib" path="src/used api/sign-7.0.2.jar"/>
+	<classpathentry kind="lib" path="src/used api/sign-7.0.2-sources.jar"/>
 	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
